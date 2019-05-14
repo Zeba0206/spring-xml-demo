@@ -16,39 +16,23 @@ Create a spring-xml-demo repo and push the code to master branch.
 package com.stackroute;
 
 import com.stackroute.stackroute.domain.Movie;
-import org.springframework.beans.factory.BeanFactory;
-import org.springframework.beans.factory.support.BeanDefinitionReader;
-import org.springframework.beans.factory.support.BeanDefinitionRegistry;
-import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
-import org.springframework.beans.factory.xml.XmlBeanFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 
 public class Main {
     public static void main(String[] args) {
         // Task-1 using Application context
         ApplicationContext bean=new ClassPathXmlApplicationContext("beans.xml");
-        Movie movie1 =(Movie) bean.getBean("movie1");
-        System.out.println(movie1.toString());
+        Movie movie1 =(Movie) bean.getBean("MovieA");
+        Movie movie2=(Movie)bean.getBean("movie2");
 
-        // Task-1 using XmlBeanFactory
-        Resource resource=new ClassPathResource("beans.xml");
-        BeanFactory factory = new XmlBeanFactory(resource);
-        Movie movie2=(Movie)factory.getBean("movie2");
+        Movie movie3=(Movie)bean.getBean("MovieB");
+
+
+        System.out.println(movie1.toString());
         System.out.println(movie2.toString());
 
-        // Task-1 using DefinitionReader
 
-        BeanDefinitionRegistry beanDefinitionRegistry=new DefaultListableBeanFactory();
-        BeanDefinitionReader beanDefinitionReader = new XmlBeanDefinitionReader(beanDefinitionRegistry);
-        beanDefinitionReader.loadBeanDefinitions(new ClassPathResource("beans.xml"));
-        Movie movie3=(Movie)((DefaultListableBeanFactory) beanDefinitionRegistry).getBean("movie3");
-        System.out.println(movie3.toString());
-
-
-
+        System.out.println(movie3==movie2);
     }
 }
